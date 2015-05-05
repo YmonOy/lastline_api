@@ -1,0 +1,17 @@
+[papi]
+# For hosted server use this URL.
+# For on-premise, adapt with host name of manager
+url = https://user.lastline.com/papi
+
+# Either user-based,
+auth_method = account
+username = your_user@your_site.com
+password = ***********
+
+# or license/key based
+auth_method = license
+api_key = 12345...45123451234512345
+api_token = ***********
+
+verify_ssl = True
+timeout = 3

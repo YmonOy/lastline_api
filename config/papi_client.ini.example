@@ -1,0 +1,17 @@
+[papi]
+# For hosted server use this URL.
+# For on-premise, adapt with host name of manager
+url = https://llapi.EXAMPLE.COM/papi
+
+# Either user-based,
+auth_method = account
+username = REPLACEME 
+password = REPLACEME 
+
+# or license/key based
+#auth_method = license
+#api_key = 12345...45123451234512345
+#api_token = ***********
+
+verify_ssl = False
+timeout = 5

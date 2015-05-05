@@ -1,0 +1,39 @@
+WSGIPythonPath /opt/lastline_api:/opt/lastline_api/lib
+
+<VirtualHost *:80>
+  ServerName llapi.example.com
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName llapi.example.com
+
+  SSLProtocol ALL -SSLv2 -SSLv3
+  SSLHonorCipherOrder On
+  SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+  SSLEngine On
+  SSLCertificateFile /etc/httpd/ssl/llapi.example.com.crt
+  SSLCertificateKeyFile /etc/httpd/ssl/llapi.example.com.key
+
+  SetEnv REQUESTS_CA_BUNDLE /opt/lastline_api/certs/ca
+
+  Alias /robots.txt /opt/lastline_api/static/robots.txt
+  Alias /favicon.ico /opt/lastline_api/static/favicon.ico
+
+  Alias /media/ /opt/lastline_api/media/
+  Alias /static/ /opt/lastline_api/static/
+
+  <Directory /opt/lastline_api/static>
+    Require all granted
+  </Directory>
+
+  WSGIScriptAlias / /opt/lastline_api/lastline_api/wsgi.py
+
+  <Directory /opt/lastline_api>
+    <Files wsgi.py>
+      Require all granted
+    </Files>
+  </Directory>
+</VirtualHost>

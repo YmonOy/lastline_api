@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link href="{% static 'base-styles.css' %}"
+          rel="stylesheet" media="screen">
+  </head>
+
+  <body id="body">
+    <div>
+      {{ user }}
+      {% if user.is_anonymous %}
+      <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+      {% else %}
+      <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+      {% endif %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <div id="footer">2015 &copy Ymon Oy | Äyritie 8 D 01510 | Vantaa Finland | Web <a href="http://ymon.fi">ymon.fi</a> | Email <a href="mailto:info@ymon.fi">info@ymon.fi</a></div>
+  </body>
+</html>

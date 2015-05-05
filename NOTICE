@@ -1,0 +1,15 @@
+Lastline Web API
+
+Provide an easy to use web-based interface to the Lastline (http://lastline.com) API.
+
+This software is an alpha development version and not representative of the quality or features of the full product.
+
+See 'LICENSE' for licensing information. 
+See 'INSTALL' for requirements and installation instructions.
+See 'docs/Lastline-API-UserGuide-0.1.pdf' for user guide.
+
+Developers:
+  Sonia Holopainen <sonia.holopainen+github@ymon.fi> / Ymon Oy, http://ymon.fi
+
+Contributors:
+

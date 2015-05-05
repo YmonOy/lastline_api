@@ -1,0 +1,86 @@
+This software is an alpha development version and not representative of the quality or features of the full product.
+
+The software has been tested on a CentOS 7 server, and is the recommended operating system at this time. You may have luck installing on your favorite flavor of Linux as well. This software has been tested against an on-premise enterprise Lastline installation.
+
+Software requirements (Tested with):
+  yum:
+    epel-repository => 7.5 
+    httpd/apache => 2.4.6-19
+    mod_wsgi => 3.4-12
+    python-pip => 1.5.6.5
+    policycoreutils-python => 2.2.5-15
+  pip:
+    django => 1.7.5
+    requests => 2.5.3
+    dill => 0.2.2
+    django-request-provider => 1.0.2
+    django-ipware => 0.1.0 
+
+Other requirements:
+  An admin level account is required on Lastline manager. The username and password of the account are used to login to the Lastline API to make changes.
+
+Steps for installation:
+
+The following should be performed as the 'root' user. Lines prefixed by a '#' character are to be typed into a shell. RPM packaging is in plans to be provided at a later date.
+
+1. Install required repositories, Apache webserver and libraries.
+# yum update && yum install epel-release
+# yum update && yum install httpd mod_ssl mod_wsgi python-pip policycoreutils-python
+# pip install django requests dill django-request-provider django-ipware
+# systemctl enable httpd.service
+
+2. Save this software under /opt/lastline_api
+# cp -r <this directory> /opt/lastline_api
+
+3. Configure Apache virtualhost as per example in:
+/opt/lastline_api/config/apache/lastline_api.conf.example
+Note: This is only an example, it is not designed to be used directly. Be sure to change your configuration to match your needs. 
+
+4. Configure lastline_api with the access credentials to your Lastline installation
+# cp /opt/lastline_api/config/papi_client.ini.example /opt/lastline_api/config/papi_client.ini
+Edit the papi_client.ini fields: url, username, password
+
+This should correspond to your Lastline manager servers information. The user should be one with admin rights on the Lastline manager. Note that the url must end '/papi'. Note: CA verification is not yet supported at this time.
+
+5. Edit the '/opt/lastline_api/lastline_api/settings.py' file
+
+It is necessary to change the 'SECRET_KEY' for any production environment. Example:
+SECRET_KEY = 'ThisShouldBeALongStringOfRandomCharacters'
+
+You should also set your timezone. Example:
+TIME_ZONE = 'Europe/Helsinki'
+
+The other settings should be fine with the defaults.
+
+6. Create the sqlite database and superuser
+# /opt/lastline_api/manage.py migrate
+# /opt/lastline_api/manage.py createsuperuser
+
+7. Collect static files to '/opt/lastline_api/static' directory to be served
+# /opt/lastline_api/manage.py collectstatic
+Note: You can either host these static files directly from the server, or move them over to a CDN. In the latter case you will need to edit 'STATIC_URL' in '/opt/lastline_api/lastline_api/settings.py' accordingly.
+
+8. Ensure correct permissions and SELinux context for the installation
+# chown -R root:root /opt/lastline_api
+# chown apache: /opt/lastline_api /opt/lastline_api/db.sqlite3
+# semanage fcontext -a -t "httpd_sys_content_t" "/opt/lastline_api(/.*)?"
+# semanage fcontext -a -t "httpd_sys_rw_content_t" "/opt/lastline_api"
+# semanage fcontext -a -t "httpd_sys_rw_content_t" "/opt/lastline_api/db.sqlite3"
+# restorecon -rv /opt/lastline_api
+
+9. Restart Apache
+# systemctl restart httpd
+
+10. Start using Lastline Web API
+User interface: https://<server address/
+Admin interface: https://<server address>/admin
+
+
+Notes on the admin interface:
+
+- Login by using the superuser you created earlier.
+- New users can be created through the admin interface.
+- New users get basic access rights by default and cannot login to the admin interface.
+- Add the user 'Staff status' if you wish them to be able to login into the admin interface and make changes.
+- Changing your password is possible through the admin interface.
+- Groups are not used for anything at this time.

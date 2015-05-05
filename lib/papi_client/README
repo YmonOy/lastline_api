@@ -1,0 +1,41 @@
+Lastline PAPI client
+-----------------------
+
+This package provides a python implementation of a
+client for the Lastline PAPI.
+
+This package is made available to Lastline users 
+under a permissive license to make it easier for 
+them to make use of or integrate with the Lastline PAPI. 
+
+
+Possible uses
+-----------------------
+
+ - explore PAPI functionality interactively in an ipython shell
+ - view or adapt example scripts that use the PAPI client
+ - include the papi_client module in python code implementing a 
+   custom integration with the Lastline PAPI
+ - use this as an example for implementing a PAPI client/integration
+   in a different programming langautge
+
+Included in this distribution are:
+
+papi_client.ini.template: Template configuration file
+papi_client/: General PAPI client functionality
+papi_client/api/: modules implementing individual views of the PAPI
+papi_client_test/: unit tests
+scripts/papi_shell.py: interactive PAPI client shell
+examples: sample scripts making use of the PAPI client
+
+
+Requirements
+-----------------------
+
+The Lastline PAPI client requires:
+
+- python 2.6 or 2.7.
+- The python requests module (version 2 or above).
+- To use the interactive shell scripts/papi_shell.py, 
+  the ipython module is also required.
+

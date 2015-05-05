@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<html>
+<head>
+<title>Blacklist management</title>
+<link rel="stylesheet" type="text/css" href="{% static 'tablesorter/css/theme.black-ice.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'tablesorter/addons/pager/jquery.tablesorter.pager.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'base-styles.css' %}" /> 
+<link rel="stylesheet" type="text/css" href="{% static 'intel/styles.css' %}" /> 
+
+<!-- The core React library -->
+<script type="text/javascript" src="{% static 'intel/dev/react-0.12.2.js' %}"></script>
+<!-- In-browser JSX transformer, remove when pre-compiling JSX. -->
+<script type="text/javascript" src="{% static 'intel/dev/JSXTransformer-0.12.2.js' %}"></script>
+<!-- Jquery library for ajax. -->
+<script type="text/javascript" src="{% static 'intel/prod/jquery-2.1.3.min.js' %}"></script>
+
+<!-- Enable our ajax csrf protection -->
+<script type="text/javascript" src="{% static 'intel/csrf-posts.js' %}"></script> 
+
+<!-- Jquery TableSort addon -->
+<script type="text/javascript" src="{% static 'tablesorter/js/jquery.tablesorter.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'tablesorter/js/jquery.tablesorter.widgets.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'tablesorter/js/parsers/parser-network.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'tablesorter/addons/pager/jquery.tablesorter.pager.min.js' %}"></script>
+<!-- Setup and configure our tablesort -->
+<script type="text/javascript" src="{% static 'intel/sort-lists.js' %}"></script>
+
+<!-- Script for handling our json (ajax) input/output -->
+<script type="text/jsx" src="{% static 'intel/dev/blacklists.jsx' %}"></script> 
+
+</head>
+<body>
+
+  <div>
+    {{ user }}
+    {% if user.is_anonymous %}
+    <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}
+    <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+    {% endif %}
+  </div>
+
+  <div id="blacklistIP"></div>
+  <div id="blacklistDomain"></div>
+
+  <div id="footer">2015 &copy Ymon Oy | Äyritie 8 D 01510 | Vantaa Finland | Web <a href="http://ymon.fi">ymon.fi</a> | Email <a href="mailto:info@ymon.fi">info@ymon.fi</a></div>
+
+</body>
+</html>

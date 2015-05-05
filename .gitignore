@@ -1,0 +1,11 @@
+papi_client.ini
+*.pyc
+*.swp
+.vagrant
+/vagrant
+/db.sqlite3
+/runserver.sh
+runshell.sh
+
+/static/**
+!/static/.keepdir
